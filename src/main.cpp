@@ -29,7 +29,6 @@
 #include <fmt/core.h>
 
 #include <assert.h>
-#include <iostream>
 
 namespace 
 {
@@ -113,9 +112,9 @@ int main(int argc, char** argv)
     }
 
     if (fbxDataNew.length() == fbxDataOld.length()) {
-        std::cout << "FbxStream read/write passed successfully!" << '\n';
+        fmt::print("FbxStream read/write passed successfully!\n");
     } else {
-        std::cout << "FbxStream read/write failed!" << '\n';
+        fmt::print("FbxStream read/write failed!\n");        
     }
 
     fbxNS::destroy(fbxManager);

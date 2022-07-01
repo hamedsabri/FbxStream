@@ -1,6 +1,7 @@
 #include "fbxImport.h"
 #include "fbxReadWriteStream.h"
 
+#include "fmt/ostream.h"
 #include <iostream>
 
 namespace fbxNS 
@@ -33,7 +34,7 @@ bool FbxImport::readFromFile( const std::string &filepath, FbxScene* scene )
     // initialize the the importer from input file path
     status = m_fbxImporter->Initialize( filepath.c_str(), -1, m_manager->GetIOSettings() );
     if ( !status ) {
-        std::cerr << "Error returned: " << m_fbxImporter->GetStatus().GetErrorString() << std::endl;
+        fmt::print(std::cerr, "Error returned: %s\n", m_fbxImporter->GetStatus().GetErrorString());
         m_fbxImporter->Destroy();
         return status;
     }
@@ -41,7 +42,7 @@ bool FbxImport::readFromFile( const std::string &filepath, FbxScene* scene )
     // import the scene
     status = m_fbxImporter->Import( scene );
     if ( !status ) {
-        std::cerr << "Error loading FBX file: " << m_fbxImporter->GetStatus().GetErrorString() << std::endl;
+        fmt::print(std::cerr, "Error loading FBX file: %s\n", m_fbxImporter->GetStatus().GetErrorString());
         m_fbxImporter->Destroy();
         return status;
     }
@@ -60,7 +61,7 @@ bool FbxImport::readFromString( const std::string &rawData, FbxScene* scene )
 
     status = m_fbxImporter->Initialize( &fbxReadWriteStream, nullptr, -1, m_manager->GetIOSettings() );
     if ( !status ) {
-        std::cerr << "Error returned: " << m_fbxImporter->GetStatus().GetErrorString() << std::endl;
+        fmt::print(std::cerr, "Error returned: %s\n", m_fbxImporter->GetStatus().GetErrorString());        
         m_fbxImporter->Destroy();
         return status;
     }
@@ -68,7 +69,7 @@ bool FbxImport::readFromString( const std::string &rawData, FbxScene* scene )
     // import the scene
     status = m_fbxImporter->Import( scene );
     if ( !status ) {
-        std::cerr << "Error loading FBX file: " << m_fbxImporter->GetStatus().GetErrorString() << std::endl;
+        fmt::print(std::cerr, "Error loading FBX file: %s\n", m_fbxImporter->GetStatus().GetErrorString());        
         m_fbxImporter->Destroy();
         return status;
     }

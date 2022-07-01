@@ -1,6 +1,7 @@
 #include "fbxExport.h"
 #include "fbxReadWriteStream.h"
 
+#include "fmt/ostream.h"
 #include <iostream>
 
 namespace fbxNS 
@@ -34,8 +35,8 @@ bool FbxExport::writeToFile( const std::string &filepath, FbxScene* scene )
     // initialize the exporter from file path
     status = m_fbxExporter->Initialize( filepath.c_str(), format, m_manager->GetIOSettings() );
     if ( !status ) {
-        std::cerr << "Error: FbxExporter::Initialize() failed." << std::endl;
-        std::cerr << "Error returned: " << m_fbxExporter->GetStatus().GetErrorString() << std::endl;
+        fmt::print(std::cerr, "%s\n", "Error: FbxExporter::Initialize() failed.");
+        fmt::print(std::cerr, "%s\n", m_fbxExporter->GetStatus().GetErrorString());
         m_fbxExporter->Destroy();
         return status;
     }
@@ -58,8 +59,8 @@ bool FbxExport::writeToString( std::string &outString, FbxScene* scene )
 
     status = m_fbxExporter->Initialize( &fbxReadWriteStream, nullptr, format, m_manager->GetIOSettings() );
     if ( !status ) {
-        std::cerr << "Error: FbxExporter::Initialize() failed." << std::endl;
-        std::cerr << "Error returned: " << m_fbxExporter->GetStatus().GetErrorString() << std::endl;
+        fmt::print(std::cerr, "%s\n", "Error: FbxExporter::Initialize() failed.");
+        fmt::print(std::cerr, "%s\n", m_fbxExporter->GetStatus().GetErrorString());
         m_fbxExporter->Destroy();
         return status;
     }
